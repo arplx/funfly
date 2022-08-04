@@ -8,7 +8,8 @@
     text-align: center;
 }
 .signup-card{
-    width: 25rem;
+    width: 20rem;
+    height: 22rem;
     border: 1px solid #ccc;
     padding: 1rem;
     border-top-left-radius: 1rem;
@@ -16,7 +17,7 @@
 }
 
 .bottom-card{
-    width: 25rem;
+    width: 20rem;
     border: 1px solid #ccc;
     padding: 1rem;
     margin-top: 0.3rem;
