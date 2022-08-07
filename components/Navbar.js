@@ -14,22 +14,15 @@ import Image from 'next/image'
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { Link } from "@mui/material";
-const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Logout"];
+import Button from '@mui/material/Button'
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 
 const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -71,7 +64,11 @@ const ResponsiveAppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }} className="nav-icons-container">
-            <HomeIcon fontSize="large" className="nav-icons" />
+            <Link href="/"><HomeIcon fontSize="large" className="nav-icons" /></Link>
+            <IconButton color="primary" aria-label="upload video" component="label">
+              <input hidden accept="video/*" type="file" />
+              <AddCircleOutlinedIcon fontSize="large" sx={{ color: "#000000" }} />
+            </IconButton>
             <ExploreIcon fontSize="large" className="nav-icons" />
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
