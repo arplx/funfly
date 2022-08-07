@@ -1,31 +1,55 @@
-.signup-container{
-    /* border: 1px solid black; */
+.login-container{
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 8rem;
+    margin-top: 5rem;
     text-align: center;
 }
-.signup-card{
-    width: 20rem;
-    height: 22rem;
+
+.parent-card {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ max-width: 20rem;
+}
+.login-card{
     border: 1px solid #ccc;
-    padding: 1rem;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* height: 100%; */
+}
+.login-new-card{
+    /* width: 20rem; */
+    /* height: 28rem; */
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid #ccc; */
+    padding: 1rem;
+    margin: 3rem 0;
+    gap: 0.2rem;
+    /* border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem; */
 }
 
-.bottom-card{
-    width: 20rem;
+.bottom-login-card{
+    /* width: 20rem; */
     border: 1px solid #ccc;
     padding: 1rem;
     margin-top: 0.3rem;
+    /* margin-left: 1rem; */
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
 }
-.tnc{
-    padding: 0.2rem;
-    margin-top: 1rem;
-    color: gray;
+.instaMobImg{
+    background-image: url("../../assets/instaPic.png");
+    width: 418px;
+    height: 632px;
+}
+.carousel{
+    position: absolute;
+    top: 50px;
+    left: 31px;
 }

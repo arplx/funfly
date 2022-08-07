@@ -1,0 +1,41 @@
+.forgot-container{
+    border: 1px solid #ccc;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    top: calc((100vh - 80vh)/2);
+    left: calc((100vw - 30vw)/2);
+}
+
+.forgot-card{
+    width: 20rem;
+    height: 30rem;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+.forgot-feet{
+    border: 1px solid #ccc;
+    width: 25rem;
+    height: 2.2rem;
+    padding-top: 0.5rem;
+    background-color: #fafafa;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.image{
+    width: 7rem;
+    height: 7rem;
+}
