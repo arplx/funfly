@@ -8,9 +8,11 @@ import AuthWrapper from '../context/auth'
 
 
 function MyApp({ Component, pageProps }) {
-  return <AuthWrapper>
+  return(
+  <AuthWrapper>
     <Component {...pageProps} />
   </AuthWrapper>
+  )
 }
 
 export default MyApp
