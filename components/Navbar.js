@@ -17,9 +17,13 @@ import { Link } from "@mui/material";
 const settings = ["Profile", "Logout"];
 import Button from '@mui/material/Button'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import AuthWrapper, { AuthContext } from "../context/auth";
+import { useRouter } from "next/router";
 
 const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { logout } = React.useContext(AuthContext);
+  const router = useRouter();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -29,8 +33,13 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const handleLogout = async () =>{
+    await logout();
+    router.push('/login');
+  }
+
   return (
-    <AppBar position="static" className="navbar">
+    <AppBar position="static" className="navbar" sx={{backgroundColor:"white"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -74,8 +83,7 @@ const ResponsiveAppBar = () => {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Link href="/login"></Link>
                 <Avatar
-                  alt="Remy Sharp"
-                  src="/static/images/avatar/2.jpg"
+                  alt="Display Picture"
                   sx={{ margin: "0.5rem" }}
                 />
               </IconButton>
@@ -96,11 +104,15 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-              ))}
+                <MenuItem onClick={() =>{
+                handleLogout()
+                handleCloseUserMenu()
+                }}>
+                  <Typography textAlign="center">Log Out</Typography>
+                </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

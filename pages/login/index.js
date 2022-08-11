@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import Image from 'next/image';
 import logo from '../../assets/instagramLogo.png'
@@ -10,6 +10,7 @@ import bg2 from '../../assets/bg2.jpeg'
 import bg3 from '../../assets/bg3.jpeg'
 import bg4 from '../../assets/bg4.jpeg'
 import { AuthContext } from '../../context/auth';
+import { useRouter } from "next/router";
 
 
 function index() {
@@ -17,25 +18,34 @@ function index() {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+  const { login, user } = useContext(AuthContext);
+  useEffect(() => {
+    if (user) {
+      router.push("/");
 
-  const { login } = useContext(AuthContext);
-
+    }
+  },[user])
   let handleClick = async() => {
     try {
       console.log(email);
       console.log(password);
       setLoading(true);
+      setError('');
       await login(email, password);
-      console.log("looged in")
-    } catch (err) {
+      console.log("logged in");
+    }
+    catch (err) {
       console.log("error ", JSON.stringify(err));
       setError(err.code);
-
+      // use settimeout to remove error after 2sec
       setTimeout(() => {
         setError('');
-      }, 5000)
+      }, 3000);
     }
     setLoading(false);
+    
+
   }
 
   return (
@@ -60,7 +70,7 @@ function index() {
             {error != "" &&
               <div style={{color:"red"}}>{ error }</div>
             }
-            <Button variant="contained" sx={{}} fullWidth size="small" onClick={handleClick}>Login</Button>
+            <Button variant="contained" sx={{}} fullWidth size="small" onClick={handleClick} disabled={loading}>Login</Button>
             <div style={{ color: "gray" }}>OR</div>
             <div style={{ color: "#1f3f6e" }}>
               <Link href="/passreset">Forgot password?</Link>

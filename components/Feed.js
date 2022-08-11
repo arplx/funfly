@@ -23,7 +23,6 @@ export default function Feed() {
                     </div>
                 </div>
             </div>
-            <LinearProgress variant="determinate" value={30} sx={{mt:"0.2rem", mb:"0.5rem"}} />
             <div className="post-container">
                 <video />
             </div>
@@ -31,6 +30,7 @@ export default function Feed() {
                 <video />
             </div>
         </div>
+        <LinearProgress className='progressBar' variant="determinate" value={30} />
     </div>
   )
 }
