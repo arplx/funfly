@@ -1,0 +1,60 @@
+.profile-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.profile-details{
+    margin: 0.5rem;
+    display: flex;
+    height: 30vh;
+    width: 50vw;
+    margin-bottom: 1rem;
+}
+.details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.dp{
+    width: 15rem;
+    height: 12rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.profile-username{
+    display: flex;
+}
+.profile-stats{
+    display: flex;
+    justify-content: space-around;
+}
+.tags{
+    display: flex;
+}
+.tagWidth{
+    margin-right: 4rem;
+    margin-bottom: 0.5rem;
+}
+.content{
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+.reels{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.reel{
+    height: 17rem;
+    width: 17rem;
+    border: 1px solid red;
+    margin: 0.5rem;
+}

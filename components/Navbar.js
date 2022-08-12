@@ -33,13 +33,17 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
-  const handleLogout = async () =>{
+  const handleLogout = async () => {
     await logout();
     router.push('/login');
   }
 
+  const handleProfile = () => {
+    router.push('/profile')
+  }
+
   return (
-    <AppBar position="static" className="navbar" sx={{backgroundColor:"white"}}>
+    <AppBar position="static" className="navbar" sx={{ backgroundColor: "white"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -55,9 +59,10 @@ const ResponsiveAppBar = () => {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              marginLeft:"10rem"
             }}
           >
-            <Image src={instagramLogo} width={200} height={55} />
+            <Image src={instagramLogo} width={200} height={55}/>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
@@ -72,7 +77,7 @@ const ResponsiveAppBar = () => {
             ))} */}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }} className="nav-icons-container">
+          <Box sx={{ flexGrow: 0, marginRight:"10rem" }} className="nav-icons-container">
             <Link href="/"><HomeIcon fontSize="large" className="nav-icons" /></Link>
             <IconButton color="primary" aria-label="upload video" component="label">
               <input hidden accept="video/*" type="file" />
@@ -104,15 +109,18 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={() => {
+                handleProfile()
+                handleCloseUserMenu()
+              }}>
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-                <MenuItem onClick={() =>{
+              <MenuItem onClick={() => {
                 handleLogout()
                 handleCloseUserMenu()
-                }}>
-                  <Typography textAlign="center">Log Out</Typography>
-                </MenuItem>
+              }}>
+                <Typography textAlign="center">Log Out</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
