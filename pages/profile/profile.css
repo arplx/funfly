@@ -34,6 +34,7 @@
 }
 .tags{
     display: flex;
+    
 }
 .tagWidth{
     margin-right: 4rem;
@@ -55,6 +56,6 @@
 .reel{
     height: 17rem;
     width: 17rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin: 0.5rem;
 }

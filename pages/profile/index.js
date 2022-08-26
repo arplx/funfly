@@ -30,11 +30,11 @@ function Profile() {
       
       <div className="content" style={{borderTop: "1px solid #d6d6d6"}}>
         <div className="tags">
-          <div className='tagMargin'>
+          <div className='tagMargin' style={{marginRight:"1rem"}}>
           <MovieCreationRoundedIcon sx={{color:"gray"}}/>
           <div>REELS</div>
           </div>
-          <div className='tagMargin'>
+          <div className='tagMargin' style={{marginLeft:"1rem"}}>
           <BookmarkBorderOutlinedIcon />
           <div>SAVED</div>
           </div>

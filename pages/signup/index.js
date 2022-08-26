@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import Image from 'next/image';
 import logo from '../../assets/instagramLogo.png'
@@ -7,27 +7,78 @@ import Link from 'next/link'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { IconButton } from '@mui/material';
 import { AuthContext } from '../../context/auth';
+import { useRouter } from 'next/router';
+import { storage } from '../../firebase'
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function index() {
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [error, setError] = React.useState('');
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [fullName, setFullName] = React.useState("");
+    const [file, setFile] = React.useState(null);
+    const [error, setError] = React.useState("");
     const [loading, setLoading] = React.useState(false);
+    const router = useRouter();
+    const { signup, user } = useContext(AuthContext);
 
-    const { signup } = useContext(AuthContext);
 
-    const handleClick = async() =>{
+    // useEffect(() => {
+    //   if (user) {
+    //     router.push("/");
+    //   }
+    // }, [user]);
+
+    let handleClick = async () => {
+        console.log(email);
+        console.log(password);
+        console.log(fullName);
+        console.log(file);
         try {
-            console.log(email);
-            console.log(password);
             setLoading(true);
-            await signup(email, password);
-            console.log("signed up");
-        } catch (err) {
-            console.log("error", JSON.stringify(err));
-            setError(err.code);
+            setError("");
+            const userInfo = await signup(email, password);
+            console.log(userInfo.user.uid);
+            
+            // Upload file and metadata to the object 'images/mountains.jpg'
+            const storageRef = ref(storage, `${userInfo.user.uid}/Profile`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            // Register three observers:
+            // 1. 'state_changed' observer, called any time the state changes
+            // 2. Error observer, called on failure
+            // 3. Completion observer, called on successful completion
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log("Upload is " + progress + "% done");
+                },
+                (error) => {
+                    console.log(error);
+                },
+                () => {
+                    // Upload completed successfully, now we can get the download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log("File available at", downloadURL);
+                    });
+                }
+            );
+            console.log("user signed up");
+            router.push("/");
+
         }
+        catch (err) {
+            console.log("err", err);
+            setError(err.code);
+            // use settimeout to remove error after 2sec
+            setTimeout(() => {
+                setError("");
+            }, 3000);
+        }
+        setLoading(false);
+
     }
 
     return (
@@ -39,19 +90,17 @@ function index() {
                     <div style={{ color: "gray" }}>
                         Sign up to see photos and videos from your friends.
                     </div>
-                    <TextField id="outlined-basic" label="Email" variant="outlined" fullWidth size="small" margin='dense' value={email} onChange={(e) => {setEmail(e.target.value)}} />
-                    <TextField id="outlined-basic" label="Password" variant="outlined" fullWidth type={"password"} margin='dense' size="small" style={{ marginTop: "0.1rem" }} value={password} onChange={(e) => {setPassword(e.target.value)}} />
-                    {/* <TextField id="outlined-basic" label="Full Name" variant="outlined" fullWidth margin='dense' size="small" style={{ marginTop: "0.1rem" }} /> */}
+                    <TextField id="outlined-basic" label="Email" variant="outlined" fullWidth size="small" margin='dense' value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                    <TextField id="outlined-basic" label="Password" variant="outlined" fullWidth type={"password"} margin='dense' size="small" style={{ marginTop: "0.1rem" }} value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                    <TextField id="outlined-basic" label="Full Name" variant="outlined" fullWidth margin='dense' size="small" style={{ marginTop: "0.1rem" }} value={fullName} onChange={(e) => { setFullName(e.target.value) }} />
                     <Button variant="outlined" component="label" fullWidth size='small' sx={{ marginTop: "0.7rem", height: "2.3rem" }} >
-                        <IconButton color='primary'>
+                        {/* <IconButton color='primary'>
                             <CloudUploadIcon />
-                        </IconButton>
+                        </IconButton> */}
                         Upload Profile Image
-                        <input hidden accept="image/*" multiple type="file" />
+                        <input hidden accept="image/*" type="file" onChange={(e) => { setFile(e.target.files[0]) }} />
                     </Button>
-                    {error != "" &&
-                        <div style={{color:"red"}}>{ error }</div>
-                    }
+                    {error != "" && <div style={{ color: "red" }}>{error}</div>}
                     <Button variant="contained" sx={{ marginTop: "0.5rem" }} fullWidth size="small" onClick={handleClick}>Sign up</Button>
                     <div className='tnc'>By signing up, you agree to our Terms , Privacy Policy and Cookies Policy .</div>
                 </div>

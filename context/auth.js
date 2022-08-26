@@ -1,46 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import { auth } from '../firebase'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail} from "firebase/auth";
+import React, { useState, useEffect } from "react";
+import { auth} from "../firebase";
 export const AuthContext = React.createContext();
-
-function AuthWrapper({children}) {
-
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
+function AuthWrapper({ children }) {
   const [user, setUser] = useState('');
   const [loading, setLoading] = useState(true);
+
+  console.log("in auth wrapper ");
     
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user)
-      } else {
-  
-      }
+      console.log("onAuthStateChanged called" );
+      // if (user) {
+        setUser(user);
+      // }
     })
-    setLoading(false)
-  }, [])
+    setLoading(false);
+  },[])
 
-  function login(email, password){
-    return signInWithEmailAndPassword(auth, email, password)
+  function login(email,password) {
+    return signInWithEmailAndPassword(auth, email, password);
+    //goes to firebase check if function called is legit
+    //email pass checks with users table in authentication service 
+    // if present suceess ,else fail
   }
   
-  function signup(email, password, fullName){
-    createUserWithEmailAndPassword(auth, email, password)
+  function signup(email, password) {
+    return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  function logout(){
-    signOut(auth);
+  function logout() {
+    return signOut(auth);
   }
 
-  function forgot(email){
+  function forgot(email) {
     return sendPasswordResetEmail(auth, email);
   }
 
   const store = {
     login,
-    signup,
+    user,
     logout,
-    forgot
-  }
+    forgot,
+    signup
+  };
 
   return (
     <AuthContext.Provider value={store}>
