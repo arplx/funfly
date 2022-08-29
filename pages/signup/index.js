@@ -23,11 +23,11 @@ function index() {
     const { signup, user } = useContext(AuthContext);
 
 
-    // useEffect(() => {
-    //   if (user) {
-    //     router.push("/");
-    //   }
-    // }, [user]);
+    useEffect(() => {
+      if (user) {
+        router.push("/");
+      }
+    }, [user]);
 
     let handleClick = async () => {
         console.log(email);
@@ -39,7 +39,7 @@ function index() {
             setError("");
             const userInfo = await signup(email, password);
             console.log(userInfo.user.uid);
-            
+
             // Upload file and metadata to the object 'images/mountains.jpg'
             const storageRef = ref(storage, `${userInfo.user.uid}/Profile`);
             const uploadTask = uploadBytesResumable(storageRef, file);
@@ -66,7 +66,6 @@ function index() {
                 }
             );
             console.log("user signed up");
-            router.push("/");
 
         }
         catch (err) {
