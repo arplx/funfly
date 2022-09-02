@@ -67,7 +67,8 @@ function index() {
                             fullName,
                             email,
                             password,
-                            downloadURL
+                            downloadURL,
+                            uid:userInfo.user.uid,
                         }
 
                         await setDoc(doc(db, "users", userInfo.user.uid), userData);

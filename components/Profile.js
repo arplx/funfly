@@ -5,8 +5,11 @@ import MovieCreationRoundedIcon from '@mui/icons-material/MovieCreationRounded';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import pic from '../assets/pic.jpeg'
 import Image from 'next/image';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth';
 
 function Profile() {
+    const { user } = useContext(AuthContext)
     return (
         <div className='profile-container'>
             <Navbar />
@@ -16,7 +19,7 @@ function Profile() {
                 </div>
                 <div className="details">
                     <div className="profile-username">
-                        <div style={{ fontSize: "28px", fontWeight: "250" }}>thissideaditya</div>
+                        <div style={{ fontSize: "28px", fontWeight: "250" }}>Aditya Chaurasia</div>
                         <Button variant='outlined' sx={{ marginLeft: "1rem" }}>Edit profile</Button>
                     </div>
                     <div className="profile-stats">
