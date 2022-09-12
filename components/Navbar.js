@@ -23,7 +23,7 @@ import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage, db } from "../firebase";
 
@@ -93,6 +93,12 @@ const ResponsiveAppBar = ({ userData }) => {
           console.log("post", postObj);
           await setDoc(doc(db, "posts", uid), postObj);
           console.log("posts added to post collection");
+
+          await updateDoc(doc(db, "users", userData.uid), {
+          posts: arrayUnion(uid)
+          });
+
+        console.log("posts arr added to user doc")
 
         });
       }
@@ -174,9 +180,9 @@ const ResponsiveAppBar = ({ userData }) => {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Link href="/login"></Link>
                 <Avatar
-                  alt="Display Picture"
+                  alt={userData?.fullName}
                   sx={{ margin: "0.5rem" }}
-                  src={userData.downloadURL}
+                  src={userData?.downloadURL}
                 />
               </IconButton>
             </Tooltip>

@@ -7,9 +7,32 @@ import pic from '../assets/pic.jpeg'
 import Image from 'next/image';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
 
 function Profile() {
     const { user } = useContext(AuthContext)
+    const [userData, setUserData] = useState({})
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        console.log(user.uid);
+        const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
+        console.log("hello", doc.data());
+        setUserData(doc.data());
+        });
+        return () => {
+          unsub();
+        };
+      }, [user]);
+
+    // get posts from db
+    useEffect(() => {
+        
+    })
+
     return (
         <div className='profile-container'>
             <Navbar />
