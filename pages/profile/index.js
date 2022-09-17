@@ -11,11 +11,11 @@ function index() {
   const Redirect = () => {
     const router = useRouter();
     router.push('/login');
+    return null;
   }
   return (
     <>
-        {user?.uid?
-        <Profile/> :<Redirect/>}
+      {user?.uid ? <Profile/> : <Redirect/>}
     </>
   )
 }

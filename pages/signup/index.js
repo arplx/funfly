@@ -4,8 +4,6 @@ import Image from 'next/image';
 import logo from '../../assets/instagramLogo.png'
 import Button from '@mui/material/Button';
 import Link from 'next/link'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { IconButton } from '@mui/material';
 import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
 import { storage, db } from '../../firebase'

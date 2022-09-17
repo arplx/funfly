@@ -9,44 +9,53 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/auth';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { collection, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase';
+import Post from './Post';
 
 function Profile() {
     const { user } = useContext(AuthContext)
     const [userData, setUserData] = useState({})
-    const [posts, setPosts] = useState([])
+    const [postIds, setPostIds] = useState([])
+    const [userPosts, setUserPosts] = useState([])
 
     useEffect(() => {
-        console.log(user.uid);
         const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-        console.log("hello", doc.data());
-        setUserData(doc.data());
+            setUserData(doc.data());
+            setPostIds(doc.data().posts);
         });
         return () => {
-          unsub();
+            unsub();
         };
-      }, [user]);
+    }, [user]);
 
     // get posts from db
     useEffect(() => {
-        
-    })
+        let tempArr = [];
+        postIds.map(pid => {
+          const unsub = onSnapshot(doc(db, "posts", pid), (doc) => {
+            tempArr.push(doc.data());
+            setUserPosts([...tempArr]);
+            console.log("hello",tempArr);
+          });
+        })
+      }, [postIds]);
+    
 
     return (
         <div className='profile-container'>
-            <Navbar />
+            <Navbar userData={userData} />
             <div className="profile-details" >
                 <div className="dp">
-                    <Avatar sx={{ width: "10rem", height: "10rem" }} />
+                    <Avatar sx={{ width: "10rem", height: "10rem" }} src={userData.downloadURL} />
                 </div>
                 <div className="details">
                     <div className="profile-username">
-                        <div style={{ fontSize: "28px", fontWeight: "250" }}>Aditya Chaurasia</div>
+                        <div style={{ fontSize: "28px", fontWeight: "250" }}>{userData.fullName}</div>
                         <Button variant='outlined' sx={{ marginLeft: "1rem" }}>Edit profile</Button>
                     </div>
                     <div className="profile-stats">
-                        <div><span style={{ fontWeight: "bold" }}>15</span> Posts</div>
+                        <div><span style={{ fontWeight: "bold" }}>{userData.posts?.length}</span> Posts</div>
                         <div><span style={{ fontWeight: "bold" }}>1M</span> folllowers</div>
                         <div><span style={{ fontWeight: "bold" }}>1</span> following</div>
                     </div>
@@ -66,42 +75,9 @@ function Profile() {
                     </div>
                 </div>
                 <div className="reels">
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
-                    <div className='reel'>
-                        <Image src={pic} width="272" height="272" />
-                    </div>
+                {
+                userPosts.map((post) => <video className='reel' src={post.postURL} autoPlay loop muted/>)
+            }
                 </div>
             </div>
         </div>

@@ -4,7 +4,6 @@ import { AuthContext } from '../context/auth';
 import { collection, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import {db} from '../firebase'
 import { useState } from 'react';
-import { Link } from '@mui/material';
 import Post from './Post';
 
 
@@ -40,10 +39,10 @@ export default function Feed() {
 
   return (
     <div className='feed-container'>
-        <Navbar userData={userData}/>
+        <Navbar userData={userData} />
         <div className="video-container">
             {
-                posts.map((post) => <Post postData={post}/>)
+                posts.map((post) => <Post postData={post} userData = {user}/>)
             }
         </div>
     </div>

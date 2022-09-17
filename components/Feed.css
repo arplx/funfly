@@ -13,7 +13,7 @@
 } 
 
 .nav-icons-container{
-     display:flex;
+    display:flex;
     justify-content: center;
     align-items: center;
 }
@@ -30,6 +30,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-content: center;
 }
 
 /* .uploadButton{
@@ -39,11 +40,11 @@
     border-radius: 1rem solid #ccc;
 } */
 .video-container{
-    height: 80vh;
-    border: 1px solid black;
-    border-radius: 15px;
+    height: 72.3vh;
+    border: 1px;
+    /* border-radius: 15px; */
     scrollbar-width: 0;
-    margin-top: 1rem;
+    margin-top: 9vh;
     scrollbar-width: 0;
     overflow-y: scroll;
 }
@@ -58,18 +59,20 @@
 }
 
 .post-container>video{
+    border-radius: 15px;
     height: 100%;
     width: 20rem;
     object-fit: contain;
     /* background-color: lightpink; */
-    border-radius: 15px;
+    /* border-radius: 15px; */
 }
 .video-info{
     position: absolute;
     width: 20rem;
     display: flex;
-    justify-content: space-around;
-    bottom: 110px;
+    justify-content: space-between;
+    bottom: 75px;
+    height: 3rem;
 }
 .avatar-container{
     display: flex;
@@ -84,9 +87,12 @@
     width: 20%;
     display: flex;
     flex-direction: column;
-    /* position: absolute;
-    bottom: 30px;
-    left: 270px; */
+    align-items: center;
+}
+.likeNcomm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .progressBar{
     width: 320px;
